@@ -42,11 +42,20 @@ namespace Structure {
         }
 
         void add(T data) {
-            if (this->m_Next == nullptr) {
-                ChainedList<T> newNode = ChainedList<T>(data);
-                this->m_Next = &newNode;
+            ChainedList<T> *list = new ChainedList<T>(data);
+            this->add(list);
+        }
+
+        void add(ChainedList<T> *list) {
+            if (this->m_Data == nullptr) {
+                this->set(list->getData());
+                return;
             }
-            this->m_Next->add(data);
+            if (this->m_Next == nullptr) {
+                this->set(list);
+            } else {
+                this->m_Next->add(list);
+            }
         }
     };
 }

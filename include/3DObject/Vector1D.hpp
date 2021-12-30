@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace Structure {
+namespace Object {
     template <typename T>
     class Vector1D {
     private:

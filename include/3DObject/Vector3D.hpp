@@ -2,9 +2,9 @@
 
 #include "Vector2D.hpp"
 
-namespace Structure {
+namespace Object {
     template<typename T>
-    class Vector3D : public Structure::Vector2D<T> {
+    class Vector3D : public Object::Vector2D<T> {
     private:
         T m_Z = 0;
     protected:

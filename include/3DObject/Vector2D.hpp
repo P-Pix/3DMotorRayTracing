@@ -3,9 +3,9 @@
 #include "Vector1D.hpp"
 #include <iostream>
 
-namespace Structure {
+namespace Object {
     template<typename T>
-    class Vector2D : public Vector1D<T> {
+class Vector2D : public Object::Vector1D<T> {
     private:
         T m_Y = 0;
     protected:
