@@ -1,22 +1,22 @@
 #pragma once
 
 #include <iostream>
+#include "Tab1D.hpp"
 
 namespace Structure {
     template<typename T>
-    class Tab2D {
+    class Tab2D : public Structure::Tab1D<T> {
     private:
         void initTab(void) {
-            this->m_Tab = new T *[this->m_Height];
-            for (size_t i = 0; i < this->m_Height; i++) {
-                this->m_Tab[i] = new T[this->m_Width];
+            this->m_Tab = new Structure::Tab1D<T>*[this->getHeight()];
+            for (size_t i = 0; i < this->getHeight(); i++) {
+                this->set(i, new Structure::Tab1D<T>(this->m_Width));
             }
         }
 
     protected:
-        size_t m_Width = 0;
         size_t m_Height = 0;
-        T **m_Tab;
+        Structure::Tab1D<T> **m_Tab;
 
     public:
         Tab2D(void) {
@@ -28,22 +28,27 @@ namespace Structure {
         }
 
         ~Tab2D(void) {
+            for (size_t i = 0; i < this->m_Height; i++) {
+                delete this->m_Tab[i];
+            }
+            delete[] this->m_Tab;
+        }
+
+        void remake(void) {
+            for (size_t i = 0; i < this->getHeight(); i++) {
+                delete this->m_Tab[i];
+            }
+            delete[] this->m_Tab;
+            this->initTab();
         }
 
         void setHeight(size_t height) {
             this->m_Height = height;
-            this->initTab();
-        }
-
-        void setWidth(size_t width) {
-            this->m_Width = width;
-            this->initTab();
         }
 
         void setSize(size_t width, size_t height) {
-            this->m_Width = width;
+            this->setWidth(width);
             this->m_Height = height;
-            this->initTab();
         }
 
         void initPointer(void) {
@@ -80,23 +85,27 @@ namespace Structure {
         }
 
         void set(size_t x, size_t y, T value) {
-            if (x > this->getWidth() || y > this->getHeight()) {
+            if (y >= this->getHeight()) {
                 std::cout << "Error : Out of range" << std::endl;
                 return;
             }
-            this->m_Tab[y][x] = value;
+            this->m_Tab[y]->set(x, value);
+        }
+
+        void set(size_t y, Structure::Tab1D<T> *tab) {
+            if (y >= this->getHeight()) {
+                std::cout << "Error : Out of range" << std::endl;
+                return;
+            }
+            this->m_Tab[y] = tab;
         }
 
         T get(size_t x, size_t y) {
-            if (x > this->getWidth() || y > this->getHeight()) {
+            if (y >= this->getHeight()) {
                 std::cout << "Error : Out of range" << std::endl;
                 return 0;
             }
-            return this->m_Tab[y][x];
-        }
-
-        size_t getWidth(void) {
-            return this->m_Width;
+            return this->m_Tab[y]->get(x);
         }
 
         size_t getHeight(void) {
