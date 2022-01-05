@@ -1,10 +1,10 @@
 #include "../../../include/RayTracing/Line.hpp"
 
-Object::Point3D<int> *RayTracing::Line::getStart(void) {
+Point::D3<int> *RayTracing::Line::getStart(void) {
     return &this->m_Start;
 }
 
-Object::Point3D<int> *RayTracing::Line::getEnd(void) {
+Point::D3<int> *RayTracing::Line::getEnd(void) {
     return &this->m_End;
 }
 

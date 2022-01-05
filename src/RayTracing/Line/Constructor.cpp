@@ -13,7 +13,7 @@ RayTracing::Line::Line(int startX, int startY, int startZ, int endX, int endY, i
     this->m_End.set(endX, endY, endZ);
 }
 
-RayTracing::Line::Line(const Object::Point3D<int> *start, const Object::Point3D<int> *end) {
+RayTracing::Line::Line(const Point::D3<int> *start, const Point::D3<int> *end) {
     this->m_Start = *start;
     this->m_End = *end;
 }

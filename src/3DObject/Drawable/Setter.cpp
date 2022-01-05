@@ -6,7 +6,7 @@ void Object::Drawable::setPosition(int x, int y, int z) {
     this->m_Position.setZ(z);
 }
 
-void Object::Drawable::setPosition(Object::Point3D<int> *position) {
+void Object::Drawable::setPosition(Point::D3<int> *position) {
     this->m_Position = *position;
 }
 
@@ -18,7 +18,7 @@ void Object::Drawable::move(int x, int y, int z) {
     this->setPosition(this->m_Position.getX() + x, this->m_Position.getY() + y, this->m_Position.getZ() + z);
 }
 
-void Object::Drawable::move(Object::Point3D<int> *position) {
+void Object::Drawable::move(Point::D3<int> *position) {
     this->setPosition(this->m_Position.getX() + position->getX(), this->m_Position.getY() + position->getY(),
                       this->m_Position.getZ() + position->getZ());
 }

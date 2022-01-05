@@ -3,23 +3,23 @@
 #include <iostream>
 #include <cmath>
 
-namespace Object {
+namespace Point {
     template <typename T>
-    class Point1D {
+    class D1 {
     private:
         T m_X = 0;
     protected:
     public:
-        Point1D(void) {
+        D1(void) {
 
         }
-        Point1D(T x) {
+        D1(T x) {
             this->m_X = x;
         }
-        Point1D(const Object::Point1D<T>& v) {
+        D1(const Point::D1<T>& v) {
             this->m_X = v.getX();
         }
-        ~Point1D(void) {
+        ~D1(void) {
 
         }
         T getX(void) const {
@@ -35,61 +35,61 @@ namespace Object {
             float length = this->length();
             this->setX(this->getX() / length);
         }
-        Object::Point1D<T> *copy(void) const {
-            return &Point1D<T>(this->m_X);
+        Point::D1<T> *copy(void) const {
+            return &D1<T>(this->m_X);
         }
-        Object::Point1D<T>& operator=(const Object::Point1D<T>& v) {
+        Point::D1<T>& operator=(const Point::D1<T>& v) {
             this->m_X = v.getX();
             return *this;
         }
-        Object::Point1D<T>& operator+=(const Object::Point1D<T>& v) {
+        Point::D1<T>& operator+=(const Point::D1<T>& v) {
             this->m_X += v.getX();
             return *this;
         }
-        Object::Point1D<T>& operator-=(const Object::Point1D<T>& v) {
+        Point::D1<T>& operator-=(const Point::D1<T>& v) {
             this->m_X -= v.getX();
             return *this;
         }
-        Object::Point1D<T>& operator*=(const Object::Point1D<T>& v) {
+        Point::D1<T>& operator*=(const Point::D1<T>& v) {
             this->m_X *= v.getX();
             return *this;
         }
-        Object::Point1D<T>& operator/=(const Object::Point1D<T>& v) {
+        Point::D1<T>& operator/=(const Point::D1<T>& v) {
             this->m_X /= v.getX();
             return *this;
         }
-        Object::Point1D<T>& operator+=(T x) {
+        Point::D1<T>& operator+=(T x) {
             this->m_X += x;
             return *this;
         }
-        Object::Point1D<T>& operator-=(T x) {
+        Point::D1<T>& operator-=(T x) {
             this->m_X -= x;
             return *this;
         }
-        Object::Point1D<T>& operator*=(T x) {
+        Point::D1<T>& operator*=(T x) {
             this->m_X *= x;
             return *this;
         }
-        Object::Point1D<T>& operator/=(T x) {
+        Point::D1<T>& operator/=(T x) {
             this->m_X /= x;
             return *this;
         }
-        bool operator==(const Object::Point1D<T>& v) const {
+        bool operator==(const Point::D1<T>& v) const {
             return this->m_X == v.getX();
         }
-        bool operator!=(const Object::Point1D<T>& v) const {
+        bool operator!=(const Point::D1<T>& v) const {
             return this->m_X != v.getX();
         }
-        bool operator<(const Object::Point1D<T>& v) const {
+        bool operator<(const Point::D1<T>& v) const {
             return this->m_X < v.getX();
         }
-        bool operator>(const Object::Point1D<T>& v) const {
+        bool operator>(const Point::D1<T>& v) const {
             return this->m_X > v.getX();
         }
-        bool operator<=(const Object::Point1D<T>& v) const {
+        bool operator<=(const Point::D1<T>& v) const {
             return this->m_X <= v.getX();
         }
-        bool operator>=(const Object::Point1D<T>& v) const {
+        bool operator>=(const Point::D1<T>& v) const {
             return this->m_X >= v.getX();
         }
         bool operator==(T x) const {
@@ -110,7 +110,7 @@ namespace Object {
         bool operator>=(T x) const {
             return this->m_X >= x;
         }
-        friend std::ostream& operator<<(std::ostream& os, const Point1D<T>& v) {
+        friend std::ostream& operator<<(std::ostream& os, const D1<T>& v) {
             os << v.getX();
             return os;
         }
