@@ -38,6 +38,14 @@ namespace Point {
         Point::D1<T> *copy(void) const {
             return &D1<T>(this->m_X);
         }
+        Point::D1<T>& operator+(const Point::D1<T>& v) {
+            this->m_X += v.getX();
+            return *this;
+        }
+        Point::D1<T>& operator-(const Point::D1<T>& v) {
+            this->m_X -= v.getX();
+            return *this;
+        }
         Point::D1<T>& operator=(const Point::D1<T>& v) {
             this->m_X = v.getX();
             return *this;

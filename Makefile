@@ -26,3 +26,7 @@ test_camera:
 test_screen:
 	@(echo "test_screen")
 	@(g++ -o test/RayTracing/Screen src/RayTracing/Screen/*.cpp src/RayTracing/Object/[^Test]*.cpp $(FLAGG))
+
+delete:
+	@(echo "delete")
+	@(rm -rf test/RayTracing/* test/3DObject/*)
