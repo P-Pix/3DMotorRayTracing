@@ -1,11 +1,12 @@
 #include "../../../include/Window/Screen.hpp"
 
 Window::Screen::Screen(void) {
-    this->init("Window");
+    this->init(this->m_Name);
 }
 
 Window::Screen::Screen(const char *Name) {
-    this->init(Name);
+    this->m_Name = Name;
+    this->init(this->m_Name);
 }
 
 Window::Screen::~Screen(void) {
@@ -17,12 +18,10 @@ void Window::Screen::init(const char *Name) {
     this->initSDL();
     this->createWindow(Name, 0, 0, 800, 600);
     this->createRenderer();
-    this->m_Keyboard.setWindow(this->m_Window);
-    this->m_Keyboard.setEvent(&this->m_Event);
-    this->m_Mouse.setWindow(this->m_Window);
-    this->m_Mouse.setEvent(&this->m_Event);
-    this->m_OtherEvent.setWindow(this->m_Window);
-    this->m_OtherEvent.setEvent(&this->m_Event);
+    this->set(&this->m_Event, this->m_Window);
+    this->m_Keyboard.set(&this->m_Event, this->m_Window);
+    this->m_Mouse.set(&this->m_Event, this->m_Window);
+    this->m_OtherEvent.set(&this->m_Event, this->m_Window);
 }
 
 bool Window::Screen::initSDL(void) {
@@ -62,7 +61,25 @@ void Window::Screen::destroyRenderer(void) {
 bool Window::Screen::restart(void) {
     this->destroyRenderer();
     this->destroyWindow();
-    this->createWindow("Window", 0, 0, 800, 600);
-    this->createRenderer();
+    if (!this->initSDL()) {
+        return false;
+    }
+    if (!this->createWindow(this->m_Name, 0, 0, 800, 600)) {
+        return false;
+    }
+    if (!this->createRenderer()) {
+        return false;
+    }
     return true;
+}
+
+void Window::Screen::event(void) {
+    this->poll();
+    if (this->m_Event.type == SDL_MOUSEMOTION) {
+        this->m_Mouse.event();
+    } else if (this->m_Event.type == SDL_KEYDOWN) {
+        this->m_Keyboard.event();
+    } else {
+        this->m_OtherEvent.event();
+    }
 }

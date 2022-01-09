@@ -8,7 +8,7 @@
 #include "OtherEvent.hpp"
 
 namespace Window {
-    class Screen {
+class Screen : public Window::Event{
     private:
         SDL_Window *m_Window = nullptr;
         SDL_Renderer *m_Renderer = nullptr;
@@ -17,6 +17,8 @@ namespace Window {
         Window::Keyboard m_Keyboard;
         Window::Mouse m_Mouse;
         Window::OtherEvent m_OtherEvent;
+
+        std::string m_Name = "Window";
 
         void init(const char *Name);
 
@@ -42,12 +44,10 @@ namespace Window {
 
         bool isOpen(void);
 
-        SDL_Renderer *getRenderer(void) const {
-            return this->m_Renderer;
-        }
+        SDL_Renderer *getRenderer(void) const;
 
-        SDL_Window *getWindow(void) const {
-            return this->m_Window;
-        }
+        SDL_Window *getWindow(void) const;
+
+        void event(void);
     };
 }

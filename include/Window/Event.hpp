@@ -15,6 +15,7 @@ namespace Window {
         Event(void);
         Event(const SDL_Event *event, SDL_Window* window);
         ~Event(void);
+        void set(const SDL_Event *event, SDL_Window *window);
         void setEvent(const SDL_Event *event);
         void setWindow(SDL_Window* window);
         bool poll(void);
