@@ -17,6 +17,9 @@ Object::Color::~Color(void) {
 }
 
 void Object::Color::init(const SDL_Color &color) {
+    if (color == nullptr) {
+        throw std::invalid_argument("Color cannot be nullptr");
+    }
     this->setColor(color);
 }
 

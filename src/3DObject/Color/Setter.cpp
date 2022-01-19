@@ -18,44 +18,36 @@ void Object::Color::Color::setAlpha(Uint8 alpha) {
 
 void Object::Color::Color::setRedF(float red) {
     if (red < 0.0f) {
-        std::cerr << "Error: Red value cannot be negative." << std::endl;
-        return;
+        throw std::out_of_range("Red value must be greater than 0.0f");
     } else if (red > 1.0f) {
-        std::cerr << "Error: Red value cannot be greater than 1." << std::endl;
-        return;
+        throw std::out_of_range("Red value must be less than 1.0f");
     }
     this->m_Color.r = static_cast<Uint8>(red * 255);
 }
 
 void Object::Color::Color::setGreenF(float green) {
     if (green < 0.0f) {
-        std::cerr << "Error: Green value cannot be negative." << std::endl;
-        return;
+        throw std::out_of_range("Green value must be greater than 0.0f");
     } else if (green > 1.0f) {
-        std::cerr << "Error: Green value cannot be greater than 1." << std::endl;
-        return;
+        throw std::out_of_range("Green value must be less than 1.0f");
     }
     this->m_Color.g = static_cast<Uint8>(green * 255);
 }
 
 void Object::Color::Color::setBlueF(float blue) {
     if (blue < 0.0f) {
-        std::cerr << "Error: Blue value cannot be negative." << std::endl;
-        return;
+        throw std::out_of_range("Blue value must be greater than 0.0f");
     } else if (blue > 1.0f) {
-        std::cerr << "Error: Blue value cannot be greater than 1." << std::endl;
-        return;
+        throw std::out_of_range("Blue value must be less than 1.0f");
     }
     this->m_Color.b = static_cast<Uint8>(blue * 255);
 }
 
 void Object::Color::Color::setAlphaF(float alpha) {
     if (alpha < 0.0f) {
-        std::cerr << "Error: Alpha value cannot be negative." << std::endl;
-        return;
+        throw std::out_of_range("Alpha value must be greater than 0.0f");
     } else if (alpha > 1.0f) {
-        std::cerr << "Error: Alpha value cannot be greater than 1." << std::endl;
-        return;
+        throw std::out_of_range("Alpha value must be less than 1.0f");
     }
     this->m_Color.a = static_cast<Uint8>(alpha * 255);
 }
@@ -68,6 +60,9 @@ void Object::Color::Color::setColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 al
 }
 
 void Object::Color::Color::setColor(const SDL_Color &color) {
+    if (color == nullptr) {
+        throw std::invalid_argument("Color cannot be nullptr");
+    }
     this->m_Color = color;
 }
 

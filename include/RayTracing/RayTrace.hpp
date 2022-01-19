@@ -14,5 +14,6 @@ private:
 public:
     RayTrace(void);
     RayTrace(Camera *camera, Screen *screen);
+
     };
 }

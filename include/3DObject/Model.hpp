@@ -18,6 +18,5 @@ namespace Object {
         ~Model(void);
 
         void draw(void);
-
     };
 }

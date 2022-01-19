@@ -16,7 +16,7 @@ namespace Structure {
 
     protected:
         size_t m_Height = 0;
-        Structure::Tab1D<T> **m_Tab;
+        Structure::Tab1D<T> *m_Tab[];
 
     public:
         Tab2D(void) {
