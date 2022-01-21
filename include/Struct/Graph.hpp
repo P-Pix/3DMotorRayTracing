@@ -95,35 +95,64 @@ public:
     }
 
     /**
-     *
-     * @param index
+     * Remove the neighbor at the specified index.
+     * @param index The index of the neighbor to remove.
+     * @require index >= 0 && index < NeighborCount
+     * @ensure NeighborCount = NeighborCount - 1
      */
     void RemoveNeighbor(int index) {
-        if (index < this->m_NeighborCount) {
-            this->m_Neighbors[index] = this->m_Neighbors[this->m_NeighborCount - 1];
-            this->m_NeighborCount--;
+        if (index > this->m_NeighborCount || index < 0) {
+            throw "Index out of bounds";
         }
+        this->m_Neighbors[index] = this->m_Neighbors[this->m_NeighborCount - 1];
+        this->m_NeighborCount--;
     }
 
+    /**
+     * Get the data of the graph.
+     * @param index The index of the neighbor to get.
+     * @ensure index >= 0 && index < NeighborCount
+     * @return The data of the neighbor at the specified index.
+     */
     Graph<T> GetNeighbor(int index) {
-        if (index < this->m_NeighborCount) {
-            return this->m_Neighbors[index];
+        if (index < 0 || index >= this->m_NeighborCount) {
+            throw "Index out of bounds";
         }
-        return Graph<T>();
+        return this->m_Neighbors[index];
     }
 
+    /**
+     * Get the number of neighbors in the graph.
+     * @return The number of neighbors in the graph.
+     */
     int GetNeighborCount(void) {
         return this->m_NeighborCount;
     }
 
+    /**
+     * Get the data of the graph.
+     * @return The data of the graph.
+     */
     T GetData(void) {
         return this->m_Data;
     }
 
+    /**
+     * Set the data of the graph.
+     * @param data The data to set.
+     * @require data != null
+     * @ensure Data = data
+     */
     void SetData(T data) {
+        if (data == nullptr) {
+            throw "Data cannot be null";
+        }
         this->m_Data = data;
     }
 
+    /**
+     * Print the graph.
+     */
     void Print(void) {
         std::cout << this->m_Data << ": ";
         for (int i = 0; i < this->m_NeighborCount; i++) {
