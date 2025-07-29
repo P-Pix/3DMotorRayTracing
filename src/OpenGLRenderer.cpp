@@ -49,7 +49,6 @@ OpenGLRenderer::OpenGLRenderer(int width, int height, const std::string& title)
     
     std::cout << "✅ GLFW window created successfully" << std::endl;
 }
-}
 
 OpenGLRenderer::~OpenGLRenderer() {
     cleanup();
