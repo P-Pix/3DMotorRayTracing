@@ -31,10 +31,83 @@
 *.out
 *.app
 
-# IDE
-.vscode
-.idea
+# Build directories
+build/
+bin/
+obj/
 
-# bin
-bin/*
-test/*
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ray Tracing output files
+*.ppm
+*.png
+*.jpg
+*.jpeg
+*.bmp
+*.tga
+*.raw
+output/
+
+# Temporary and log files
+*.log
+*.tmp
+*.temp
+core
+*.core
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Test files and directories
+test/
+tests/
+*_test
+*_test.*
+
+# Documentation build files
+docs/_build/
+docs/html/
+docs/latex/
+
+# Package files
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# CMake files (if using CMake)
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+install_manifest.txt
+
+# Profiling and debugging
+*.gcov
+*.gcno
+*.gcda
+gmon.out
+callgrind.out.*
+massif.out.*
+cachegrind.out.*
+
+# Custom executables from our project
+raytracer_cpu
+complex_scene
+test_basic

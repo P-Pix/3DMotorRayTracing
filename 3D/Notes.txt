@@ -1,3 +1,0 @@
-soit pour avoir un object 3D:
-    généré une image avec .pov et l'affiché (pas du tout ce que je veux)
-    soit généré un objet 3D en interprétant un fichier .pov

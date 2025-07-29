@@ -1,0 +1,24 @@
+# Test Makefile pour les composants de base
+
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -g
+INCLUDES = -Iinclude
+
+# Source files for basic test
+BASIC_SOURCES = src/Vector3.cpp src/Color.cpp src/Material.cpp src/test_basic.cpp
+BASIC_TARGET = build/test_basic
+
+# Create build directory
+build:
+	mkdir -p build
+
+# Test basic components
+test-basic: build
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(BASIC_SOURCES) -o $(BASIC_TARGET)
+	./$(BASIC_TARGET)
+
+# Clean
+clean-test:
+	rm -rf build/test_basic
+
+.PHONY: test-basic clean-test

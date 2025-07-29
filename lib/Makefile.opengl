@@ -1,0 +1,39 @@
+# OpenGL-specific build configuration
+# This Makefile is included by the main Makefile when OpenGL is available
+
+# OpenGL-specific compiler flags
+OPENGL_CFLAGS := $(shell pkg-config --cflags glfw3 glew)
+OPENGL_LDFLAGS := $(shell pkg-config --libs glfw3 glew) -lGL
+
+# Check if OpenGL libraries are available
+HAS_OPENGL := $(shell pkg-config --exists glfw3 glew && echo yes || echo no)
+
+# OpenGL-specific source files
+OPENGL_SOURCES := src/OpenGLRenderer.cpp
+
+# OpenGL-specific object files
+OPENGL_OBJECTS := $(OPENGL_SOURCES:.cpp=.o)
+
+# OpenGL target
+opengl: $(OPENGL_OBJECTS) $(OBJECTS) src/main.o
+	@echo "🔗 Linking OpenGL ray tracer..."
+	$(CXX) $(CXXFLAGS) -o raytracer_opengl $^ $(OPENGL_LDFLAGS)
+	@echo "✅ OpenGL ray tracer built successfully: raytracer_opengl"
+	@echo "   Run with: ./raytracer_opengl"
+
+# Compile OpenGL-specific source files
+src/OpenGLRenderer.o: src/OpenGLRenderer.cpp include/OpenGLRenderer.h
+	@echo "🔧 Compiling OpenGL renderer..."
+	$(CXX) $(CXXFLAGS) $(OPENGL_CFLAGS) -c $< -o $@
+
+# Main file for OpenGL version
+src/main.o: src/main.cpp
+	@echo "🔧 Compiling OpenGL main..."
+	$(CXX) $(CXXFLAGS) $(OPENGL_CFLAGS) -c $< -o $@
+
+# Clean OpenGL-specific files
+clean-opengl:
+	@echo "🧹 Cleaning OpenGL build files..."
+	rm -f src/OpenGLRenderer.o src/main.o raytracer_opengl
+
+.PHONY: opengl clean-opengl

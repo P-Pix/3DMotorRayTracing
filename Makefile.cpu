@@ -1,0 +1,100 @@
+# CPU-only Ray Tracing Engine Makefile
+
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -O3 -pthread
+INCLUDES = -Iinclude
+
+# Directories
+SRCDIR = src
+INCDIR = include
+BUILDDIR = build
+OBJDIR = $(BUILDDIR)/obj
+
+# Source files for CPU version (excluding OpenGL files)
+CPU_SOURCES = $(SRCDIR)/Vector3.cpp $(SRCDIR)/Color.cpp $(SRCDIR)/Ray.cpp \
+              $(SRCDIR)/Material.cpp $(SRCDIR)/Sphere.cpp $(SRCDIR)/Plane.cpp \
+              $(SRCDIR)/Scene.cpp $(SRCDIR)/Camera.cpp $(SRCDIR)/Renderer.cpp \
+              $(SRCDIR)/ImageWriter.cpp $(SRCDIR)/main_cpu.cpp
+
+COMPLEX_SOURCES = $(SRCDIR)/Vector3.cpp $(SRCDIR)/Color.cpp $(SRCDIR)/Ray.cpp \
+                  $(SRCDIR)/Material.cpp $(SRCDIR)/Sphere.cpp $(SRCDIR)/Plane.cpp \
+                  $(SRCDIR)/Scene.cpp $(SRCDIR)/Camera.cpp $(SRCDIR)/Renderer.cpp \
+                  $(SRCDIR)/ImageWriter.cpp $(SRCDIR)/complex_scene.cpp
+
+CPU_OBJECTS = $(CPU_SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
+COMPLEX_OBJECTS = $(COMPLEX_SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
+
+# Target executables
+CPU_TARGET = $(BUILDDIR)/raytracer_cpu
+COMPLEX_TARGET = $(BUILDDIR)/complex_scene
+
+# Default target
+all: $(CPU_TARGET)
+
+# Create build directories
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
+# Compile object files
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+
+# Link CPU executable
+$(CPU_TARGET): $(CPU_OBJECTS) | $(BUILDDIR)
+	$(CXX) $(CPU_OBJECTS) -o $@ -pthread
+	@echo "CPU Ray Tracer build complete: $(CPU_TARGET)"
+
+# Link Complex Scene executable
+$(COMPLEX_TARGET): $(COMPLEX_OBJECTS) | $(BUILDDIR)
+	$(CXX) $(COMPLEX_OBJECTS) -o $@ -pthread
+	@echo "Complex Scene build complete: $(COMPLEX_TARGET)"
+
+# Run the CPU ray tracer
+run: $(CPU_TARGET)
+	./$(CPU_TARGET)
+
+# Run with multiple angles
+run-multiple: $(CPU_TARGET)
+	./$(CPU_TARGET) --multiple
+
+# Run complex scene
+complex: $(COMPLEX_TARGET)
+	./$(COMPLEX_TARGET)
+
+# Build all targets
+all-targets: $(CPU_TARGET) $(COMPLEX_TARGET)
+
+# Debug build
+debug: CXXFLAGS = -std=c++17 -Wall -Wextra -g -pthread -DDEBUG
+debug: $(CPU_TARGET)
+
+# Clean build files
+clean:
+	rm -rf $(BUILDDIR)
+	rm -f *.ppm
+	rm -rf output
+	@echo "Clean complete"
+
+# Performance test (lower samples for speed)
+test-perf: CXXFLAGS += -DLOW_SAMPLES
+test-perf: $(CPU_TARGET)
+	@echo "Running performance test..."
+	time ./$(CPU_TARGET)
+
+# Help
+help:
+	@echo "Available targets:"
+	@echo "  all          - Build the CPU ray tracer (default)"
+	@echo "  run          - Build and run the ray tracer"
+	@echo "  run-multiple - Build and run with multiple camera angles"
+	@echo "  complex      - Build and run complex scene renderer"
+	@echo "  all-targets  - Build all executables"
+	@echo "  debug        - Build with debug symbols"
+	@echo "  test-perf    - Run performance test"
+	@echo "  clean        - Remove build files and images"
+	@echo "  help         - Show this help message"
+
+.PHONY: all run run-multiple complex all-targets debug test-perf clean help
